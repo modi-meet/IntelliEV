@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>IntelliEV Network - The Future of Connected Driving</title>
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%23ffffff'%3E%3C/rect%3E%3Cpath fill='%2320c997' d='M50 30 A12 12 0 1 0 50 54 A12 12 0 1 0 50 30 Z M46 58 H54 V75 H46 V58 Z'%3E%3C/path%3E%3C/svg%3E" type="image/svg+xml" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    />
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <header class="header-solid sticky top-0 z-50">
+      <div
+        class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center"
+      >
+        <a href="#" class="flex items-center gap-2">
+            <svg class="h-8 w-auto" style="color: var(--text-dark);" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 3C10.067 3 8.5 4.567 8.5 6.5C8.5 8.433 10.067 10 12 10C13.933 10 15.5 8.433 15.5 6.5C15.5 4.567 13.933 3 12 3ZM11 12H13V21H11V12Z"/>
+            </svg>
+            <span class="text-3xl font-extrabold" style="color: var(--text-dark)">IntelliEV</span>
+        </a>
+        <nav class="hidden md:flex space-x-8 items-center font-semibold" style="color: var(--text-secondary)">
+          <a href="#features" class="hover:text-black transition-colors duration-300">Features</a>
+          <a href="#audience" class="hover:text-black transition-colors duration-300">Who It's For</a>
+          <a href="#contact" class="hover:text-black transition-colors duration-300">Contact</a>
+        </nav>
+        <div>
+          <a
+            href="./loginPage/index.html"
+            class="btn-primary font-semibold px-5 py-2.5 rounded-lg"
+          >
+            Join The Network
+          </a>
+        </div>
+      </div>
+    </header>
+
+    <section class="hero-bg">
+      <div
+        class="max-w-5xl mx-auto text-center px-6 py-24 md:py-32"
+      >
+        <h2 class="text-4xl md:text-6xl font-extrabold mb-6 leading-tight" style="color: var(--text-dark)">
+          Driving the Future of EV Safety and Connectivity
+        </h2>
+        <p class="text-lg md:text-xl mb-10 max-w-3xl mx-auto" style="color: var(--text-secondary)">
+          Drive with confidence. IntelliEV connects your vehicle to a smart
+          ecosystem of drivers, emergency responders, and city infrastructure,
+          creating a safer, more efficient journey for everyone.
+        </p>
+        <a
+          href="#features"
+          class="btn-primary font-bold px-8 py-4 rounded-lg text-lg"
+        >
+          Discover How It Works
+        </a>
+      </div>
+    </section>
+
+    <section id="features" class="py-20" style="background-color: var(--bg-card);">
+      <div class="max-w-7xl mx-auto px-6 relative z-10">
+        <div class="text-center mb-16">
+          <h3 class="text-4xl font-extrabold" style="color: var(--text-dark)">Our Core Pillars</h3>
+          <p class="text-lg mt-4 max-w-2xl mx-auto" style="color: var(--text-secondary)">
+            We've built our network on three pillars designed to address every
+            aspect of the modern EV experience.
+          </p>
+        </div>
+        <div class="grid md:grid-cols-3 gap-10">
+          <div class="text-center p-6">
+            <div
+              class="bg-red-100 text-red-600 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4"
+            >
+              <i class="fa-solid fa-car-burst text-3xl"></i>
+            </div>
+            <h4 class="text-2xl font-bold mb-3">Emergency Response</h4>
+            <p style="color: var(--text-secondary)">
+              In a collision, your vehicle automatically alerts emergency
+              services with your precise location and vehicle data. Nearby
+              IntelliEV users are also notified to offer immediate assistance.
+            </p>
+          </div>
+          <div class="text-center p-6">
+            <div
+              class="bg-blue-100 text-blue-600 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4"
+            >
+              <i class="fa-solid fa-network-wired text-3xl"></i>
+            </div>
+            <h4 class="text-2xl font-bold mb-3">Intelligent Connectivity</h4>
+            <p style="color: var(--text-secondary)">
+              Using V2X (Vehicle-to-Everything) technology, your car communicates
+              with others to report hazards, traffic jams, and road conditions in
+              real-time, creating a collaborative and safer road network.
+            </p>
+          </div>
+          <div class="text-center p-6">
+            <div
+              class="bg-green-100 text-green-600 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4"
+            >
+              <i class="fa-solid fa-charging-station text-3xl"></i>
+            </div>
+            <h4 class="text-2xl font-bold mb-3">Smart Infrastructure</h4>
+            <p style="color: var(--text-secondary)">
+              End range anxiety. Find and reserve available charging stations,
+              get live updates on their status, and let your vehicle's navigation
+              route you to the most efficient charging spot on your journey.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="audience" class="py-20">
+      <div class="max-w-7xl mx-auto px-6">
+        <div class="text-center mb-16">
+          <h3 class="text-4xl font-extrabold">A Network for Everyone</h3>
+          <p class="text-lg mt-4 max-w-2xl mx-auto" style="color: var(--text-secondary)">
+            IntelliEV is designed to benefit every stakeholder in the urban
+            mobility ecosystem.
+          </p>
+        </div>
+        <div class="grid md:grid-cols-3 gap-8">
+          <div class="info-card p-8 rounded-xl">
+            <h4 class="text-xl font-bold mb-3">For EV Drivers</h4>
+            <ul class="space-y-2 list-disc list-inside" style="color: var(--text-secondary)">
+              <li>Drive with enhanced safety and peace of mind.</li>
+              <li>Receive real-time hazard and traffic alerts.</li>
+              <li>Easily find and access charging stations.</li>
+              <li>Be a part of a helpful driver community.</li>
+            </ul>
+          </div>
+          <div class="info-card p-8 rounded-xl">
+            <h4 class="text-xl font-bold mb-3">For Emergency Services</h4>
+            <ul class="space-y-2 list-disc list-inside" style="color: var(--text-secondary)">
+              <li>Receive instant, data-rich crash notifications.</li>
+              <li>Get precise GPS locations and vehicle diagnostics.</li>
+              <li>Reduce response times and save lives.</li>
+              <li>Coordinate with other responders in real-time.</li>
+            </ul>
+          </div>
+          <div class="info-card p-8 rounded-xl">
+            <h4 class="text-xl font-bold mb-3">For City Planners</h4>
+            <ul class="space-y-2 list-disc list-inside" style="color: var(--text-secondary)">
+              <li>Gather anonymous data on traffic flow.</li>
+              <li>Identify accident-prone areas for improvement.</li>
+              <li>Monitor charging infrastructure usage.</li>
+              <li>Build a smarter, more efficient city.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <section id="contact" class="py-20">
+      <div class="max-w-6xl mx-auto px-6">
+        <div class="text-center mb-16">
+          <h3 class="text-4xl font-extrabold">Join the Revolution</h3>
+          <p class="text-lg mt-4" style="color: var(--text-secondary)">
+            Have questions or want to partner with us? Reach out!
+          </p>
+        </div>
+        <div class="info-card rounded-2xl p-8 md:p-12 grid md:grid-cols-2 gap-12 items-center">
+          <div>
+            <h4 class="text-2xl font-bold mb-4">Get in Touch</h4>
+            <p class="mb-6" style="color: var(--text-secondary)">We're excited to hear from drivers, developers, and city partners who want to build the future of mobility with us.</p>
+            <div class="space-y-4">
+              <p><i class="fa-solid fa-envelope mr-3" style="color: var(--accent-green)"></i> contact@intelliev.network</p>
+              <p><i class="fa-solid fa-phone mr-3" style="color: var(--accent-green)"></i> +91 80 1234 5678</p>
+              <p><i class="fa-solid fa-map-marker-alt mr-3" style="color: var(--accent-green)"></i> Bengaluru, Karnataka, India</p>
+            </div>
+          </div>
+          <form class="space-y-4">
+            <div>
+                <label for="name" class="font-semibold block mb-1">Name</label>
+                <input type="text" id="name" placeholder="Your Name" class="form-input w-full px-4 py-3 rounded-md shadow-sm"/>
+            </div>
+            <div>
+                <label for="email" class="font-semibold block mb-1">Email</label>
+                <input type="email" id="email" placeholder="Your Email" class="form-input w-full px-4 py-3 rounded-md shadow-sm"/>
+            </div>
+            <div>
+                <label for="message" class="font-semibold block mb-1">Message</label>
+                <textarea id="message" placeholder="How can we help?" rows="4" class="form-input w-full px-4 py-3 rounded-md shadow-sm"></textarea>
+            </div>
+            <button
+              type="submit"
+              class="w-full btn-primary font-bold px-6 py-3 rounded-lg text-lg"
+            >
+              Send Message
+            </button>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <footer style="background-color: #212529;" class="text-white py-12">
+      <div class="max-w-7xl mx-auto px-6 text-center">
+        <div class="flex items-center justify-center gap-2 mb-4">
+            <svg class="h-8 w-auto text-white" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 3C10.067 3 8.5 4.567 8.5 6.5C8.5 8.433 10.067 10 12 10C13.933 10 15.5 8.433 15.5 6.5C15.5 4.567 13.933 3 12 3ZM11 12H13V21H11V12Z"/>
+            </svg>
+            <h4 class="text-2xl font-bold">IntelliEV</h4>
+        </div>
+        <div class="flex justify-center space-x-6 mb-6 text-lg text-gray-400">
+          <a href="#features" class="hover:text-white transition-colors duration-300">Features</a>
+          <a href="#audience" class="hover:text-white transition-colors duration-300">Who It's For</a>
+          <a href="#" class="hover:text-white transition-colors duration-300">Privacy Policy</a>
+          <a href="#" class="hover:text-white transition-colors duration-300">Terms of Service</a>
+        </div>
+        <div class="flex justify-center space-x-6 text-2xl mb-8">
+            <a href="#" class="text-gray-500 hover:text-white transition-transform duration-300 transform hover:scale-110"><i class="fa-brands fa-twitter"></i></a>
+            <a href="#" class="text-gray-500 hover:text-white transition-transform duration-300 transform hover:scale-110"><i class="fa-brands fa-linkedin-in"></i></a>
+            <a href="#" class="text-gray-500 hover:text-white transition-transform duration-300 transform hover:scale-110"><i class="fa-brands fa-github"></i></a>
+        </div>
+        <p class="text-gray-500">&copy; 2025 IntelliEV Network. All rights reserved.</p>
+      </div>
+    </footer>
+  </body>
+</html>

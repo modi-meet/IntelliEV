@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>IntelliEV Network - Driver Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet-routing-machine@3.2.12/dist/leaflet-routing-machine.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body class="bg-gray-100 flex flex-col h-screen">
+    <div id="message-box" class="message-box"></div>
+    <header
+      class="bg-white shadow-md p-4 flex justify-between items-center z-20"
+    >
+      <h1 class="text-2xl font-bold text-blue-600">IntelliEV Network</h1>
+      <div class="flex items-center gap-4">
+        <div id="registration-info" class="text-right">
+          <p class="font-semibold text-gray-800">Loading...</p>
+          <p class="text-sm text-gray-500">EV Driver</p>
+        </div>
+        <button
+          id="logoutBtn"
+          class="bg-red-500 text-white font-semibold px-4 py-2 rounded-lg hover:bg-red-600 transition"
+        >
+          Logout
+        </button>
+      </div>
+    </header>
+
+    <div
+      class="flex-grow grid grid-cols-1 lg:grid-cols-5 gap-4 p-4"
+      style="visibility: hidden"
+      id="main-container"
+    >
+      <div class="lg:col-span-1 flex flex-col gap-4">
+        <div class="bg-white p-6 rounded-xl shadow-lg">
+          <h2 class="text-xl font-bold mb-4 text-gray-800 border-b pb-2">
+            Network Alerts
+          </h2>
+          <div class="grid grid-cols-2 gap-3">
+            <button
+              id="emergencyBtn"
+              class="bg-red-600 text-white p-3 rounded-lg font-semibold hover:bg-red-700 flex items-center justify-center gap-2"
+            >
+              <i class="fa-solid fa-triangle-exclamation"></i>SOS
+            </button>
+            <button
+              id="hazardBtn"
+              class="bg-orange-500 text-white p-3 rounded-lg font-semibold hover:bg-orange-600 flex items-center justify-center gap-2"
+            >
+              <i class="fa-solid fa-road-barrier"></i>Hazard
+            </button>
+            <button
+              id="chargingBtn"
+              class="bg-sky-500 text-white p-3 rounded-lg font-semibold hover:bg-sky-600 flex items-center justify-center gap-2"
+            >
+              <i class="fa-solid fa-charging-station"></i>Charging
+            </button>
+            <button
+              id="toggleTrafficBtn"
+              class="bg-gray-500 text-white p-3 rounded-lg font-semibold hover:bg-gray-600 flex items-center justify-center gap-2"
+            >
+              <i class="fa-solid fa-traffic-light"></i>Toggle Traffic
+            </button>
+          </div>
+        </div>
+        <div class="bg-white p-6 rounded-xl shadow-lg">
+          <h3 class="text-xl font-bold mb-2 text-gray-800 border-b pb-2">
+            Vehicle Status
+          </h3>
+          <div class="space-y-2 mt-4 text-gray-700">
+            <p>
+              <strong>Battery:</strong>
+              <span class="text-green-600 font-semibold">88%</span>
+            </p>
+            <p>
+              <strong>Range:</strong> <span class="font-semibold">280 km</span>
+            </p>
+            <p>
+              <strong>Status:</strong>
+              <span class="text-blue-600 font-semibold">Online</span>
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div
+        class="lg:col-span-3 bg-white rounded-xl shadow-lg overflow-hidden relative"
+      >
+        <div id="map-view" class="h-full w-full">
+          <div id="mapid"></div>
+          <button
+            id="close-navigation-btn"
+            class="hidden bg-red-500 text-white font-semibold px-4 py-2 rounded-lg hover:bg-red-600 transition"
+          >
+            Close Navigation
+          </button>
+          <div
+            id="ambulance-tracking-card"
+            class="hidden absolute top-4 right-4 bg-white p-4 rounded-lg shadow-xl z-[1000] w-64 border-2 border-blue-500"
+          >
+            <h3 class="font-bold text-lg text-blue-600 flex items-center gap-2">
+              <i class="fas fa-truck-medical"></i>Ambulance Dispatched!
+            </h3>
+            <p class="text-sm text-gray-700 mt-2">
+              ID: <span id="ambulance-id" class="font-semibold">--</span>
+            </p>
+            <p class="text-sm text-gray-700">
+              Status:
+              <span id="ambulance-status" class="font-semibold">En Route</span>
+            </p>
+            <p class="text-sm text-gray-700">
+              ETA: <span id="ambulance-eta" class="font-semibold">-- min</span>
+            </p>
+          </div>
+        </div>
+
+        <div
+          id="inline-sos-view"
+          class="hidden h-full flex flex-col bg-gray-800 text-white p-6 justify-center"
+        >
+          <button
+            id="back-to-map-btn"
+            class="absolute top-4 left-4 bg-gray-700 hover:bg-gray-600 text-white font-semibold px-4 py-2 rounded-lg z-10"
+          >
+            <i class="fas fa-arrow-left mr-2"></i> Back to Dashboard
+          </button>
+          <header class="mb-8 text-center">
+            <h1 class="text-3xl md:text-4xl font-bold">Smart SOS System</h1>
+            <p class="text-gray-400 mt-2">Your Vehicle's Guardian Angel</p>
+          </header>
+          <section
+            id="vehicle-status-inline"
+            class="bg-slate-900/50 rounded-lg p-6 mb-8 max-w-lg mx-auto grid grid-cols-3 gap-4 text-left shadow-lg w-full"
+          >
+            <div>
+              <h3 class="text-gray-500 text-sm font-medium">Battery</h3>
+              <p
+                id="battery-level-inline"
+                class="text-2xl font-bold text-yellow-400"
+              >
+                78%
+              </p>
+            </div>
+            <div>
+              <h3 class="text-gray-500 text-sm font-medium">Passengers</h3>
+              <p id="passenger-count-inline" class="text-2xl font-bold">2</p>
+            </div>
+            <div>
+              <h3 class="text-gray-500 text-sm font-medium">Driver Vitals</h3>
+              <p
+                id="driver-vitals-inline"
+                class="text-2xl font-bold text-blue-400"
+              >
+                68 BPM
+              </p>
+            </div>
+          </section>
+          <main class="text-center">
+            <button
+              id="sos-button-inline"
+              class="bg-red-600 hover:bg-red-700 text-white font-bold rounded-full w-48 h-48 flex items-center justify-center text-5xl shadow-2xl transition-transform transform hover:scale-105 duration-300 ease-in-out mx-auto"
+            >
+              SOS
+            </button>
+            <p id="sos-status-inline" class="mt-4 text-gray-400 h-6"></p>
+          </main>
+        </div>
+      </div>
+
+      <div class="lg:col-span-1 flex flex-col gap-4 h-screen">
+        <div
+          class="bg-white p-6 rounded-xl shadow-lg flex-grow flex flex-col overflow-hidden"
+        >
+          <h3 class="text-xl font-bold mb-4 text-gray-800 border-b pb-2">
+            Live Feed
+          </h3>
+          <div
+            id="live-feed-messages"
+            class="flex-grow overflow-y-auto pr-2 space-y-3"
+          ></div>
+          <div class="mt-4 pt-4 border-t flex-shrink-0">
+            <textarea
+              id="customMessageInput"
+              placeholder="Type a message to broadcast..."
+              class="w-full p-2 border rounded-lg h-10 text-sm resize-none"
+            ></textarea>
+            <button
+              id="sendCustomMsgBtn"
+              class="w-full mt-2 bg-purple-600 text-white p-3 rounded-lg font-semibold hover:bg-purple-700"
+            >
+              Send Message
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="hazardModal" class="modal-overlay">
+      <div class="modal-content">
+        <h2 class="text-2xl font-bold mb-6 text-gray-800">
+          Report a Road Hazard
+        </h2>
+        <div class="hazard-list">
+          <button data-hazard="Potholes & uneven roads" class="hazard-btn">
+            Potholes & uneven roads
+          </button>
+          <button data-hazard="Pedestrians jaywalking" class="hazard-btn">
+            Pedestrians jaywalking
+          </button>
+          <button
+            data-hazard="Speed breakers without markings"
+            class="hazard-btn"
+          >
+            Speed breakers without markings
+          </button>
+          <button data-hazard="Overloaded trucks / buses" class="hazard-btn">
+            Overloaded trucks / buses
+          </button>
+          <button
+            data-hazard="Open drains / missing manhole covers"
+            class="hazard-btn"
+          >
+            Open drains / missing manhole covers
+          </button>
+          <button data-hazard="Slippery roads" class="hazard-btn">
+            Slippery roads
+          </button>
+          <button
+            data-hazard="Car Accident"
+            class="hazard-btn"
+            id="car-accident-btn"
+          >
+            Car Accident (AI Analysis)
+          </button>
+        </div>
+        <button
+          id="closeModalBtn"
+          class="w-full mt-6 bg-red-500 text-white font-semibold py-3 rounded-lg hover:bg-red-600"
+        >
+          Cancel
+        </button>
+      </div>
+    </div>
+
+    <div id="aiAnalysisModal" class="modal-overlay">
+      <div
+        class="modal-content"
+        style="max-width: 90vw; max-height: 90vh; overflow-y: auto"
+      >
+        <h2
+          class="text-2xl font-bold mb-6 text-gray-800 sticky top-0 bg-white z-10 pb-2 border-b"
+        >
+          AI-Powered Hazard Detection
+        </h2>
+        <div class="overflow-y-auto" style="max-height: calc(90vh - 150px)">
+          <div class="mb-4">
+            <label class="block text-sm font-medium text-gray-700 mb-2">
+              Upload Image for Analysis
+            </label>
+            <input
+              type="file"
+              id="imageUpload"
+              accept="*"
+              class="w-full p-2 border border-gray-300 rounded-lg"
+            />
+          </div>
+          <div id="imagePreview" class="mb-4 hidden">
+            <img
+              id="previewImg"
+              class="max-w-full h-auto rounded-lg border"
+              style="max-height: 300px; object-fit: contain"
+            />
+            <canvas
+              id="analysisCanvas"
+              class="max-w-full h-auto rounded-lg border mt-2 hidden"
+              style="max-height: 300px"
+            ></canvas>
+          </div>
+          <div id="analysisResults" class="mb-4 hidden">
+            <h3 class="text-lg font-semibold mb-2">Analysis Results:</h3>
+            <div
+              id="detectionsList"
+              class="space-y-2 max-h-40 overflow-y-auto border rounded p-2"
+            ></div>
+            <div id="severityScore" class="mt-4 p-3 rounded-lg"></div>
+          </div>
+        </div>
+        <div class="flex gap-3 sticky bottom-0 bg-white pt-4 border-t">
+          <button
+            id="analyzeBtn"
+            class="flex-1 bg-blue-600 text-white font-semibold py-3 rounded-lg hover:bg-blue-700 disabled:bg-gray-400"
+            disabled
+          >
+            Analyze Image
+          </button>
+          <button
+            id="sendReportBtn"
+            class="flex-1 bg-green-600 text-white font-semibold py-3 rounded-lg hover:bg-green-700 hidden"
+          >
+            Send Report
+          </button>
+          <button
+            id="closeAiModalBtn"
+            class="flex-1 bg-gray-500 text-white font-semibold py-3 rounded-lg hover:bg-gray-600"
+          >
+            Cancel
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div
+      id="ai-sos-confirm-modal"
+      class="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center hidden z-[1000] p-4"
+    >
+      <div
+        class="bg-gray-800 rounded-lg p-8 max-w-sm w-full text-center shadow-xl"
+      >
+        <h2 class="text-2xl font-bold text-red-400 mb-4">
+          Critical Accident Detected!
+        </h2>
+        <p class="text-gray-300 mb-2">
+          AI Analysis indicates a severe accident.
+        </p>
+        <p class="text-gray-300 mb-6">
+          An SOS alert will be sent automatically in
+          <span id="ai-countdown-timer" class="text-red-400 font-bold">15</span>
+          seconds.
+        </p>
+        <div class="relative w-24 h-24 mx-auto mb-6">
+          <svg class="absolute inset-0 w-full h-full" viewBox="0 0 36 36">
+            <path
+              class="text-gray-700"
+              d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+              fill="none"
+              stroke-width="4"
+            ></path>
+            <path
+              id="ai-countdown-circle"
+              class="text-red-400"
+              stroke-dasharray="100, 100"
+              d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+              fill="none"
+              stroke-width="4"
+              stroke-linecap="round"
+            ></path>
+          </svg>
+          <span
+            id="ai-countdown-display"
+            class="absolute inset-0 flex items-center justify-center text-4xl font-bold text-red-400"
+            >15</span
+          >
+        </div>
+        <div class="flex justify-around">
+          <button
+            id="cancel-ai-sos-button"
+            class="bg-gray-600 hover:bg-gray-500 text-white font-bold py-3 px-8 rounded-lg transition-colors duration-300"
+          >
+            Cancel
+          </button>
+          <button
+            id="confirm-ai-sos-button"
+            class="bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-8 rounded-lg transition-colors duration-300"
+          >
+            Confirm Now
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div
+      id="sos-confirm-modal"
+      class="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center hidden z-50 p-4"
+    >
+      <div
+        class="bg-gray-800 rounded-lg p-8 max-w-sm w-full text-center shadow-xl"
+      >
+        <h2 class="text-2xl font-bold text-yellow-400 mb-4">
+          Potential Collision Detected!
+        </h2>
+        <p class="text-gray-300 mb-6">
+          An SOS alert will be sent automatically. Do you need to cancel?
+        </p>
+        <div class="relative w-24 h-24 mx-auto mb-6">
+          <svg class="absolute inset-0 w-full h-full" viewBox="0 0 36 36">
+            <path
+              class="text-gray-700"
+              d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+              fill="none"
+              stroke-width="4"
+            ></path>
+            <path
+              id="countdown-circle"
+              class="text-yellow-400"
+              stroke-dasharray="100, 100"
+              d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+              fill="none"
+              stroke-width="4"
+              stroke-linecap="round"
+            ></path>
+          </svg>
+          <span
+            id="countdown-timer"
+            class="absolute inset-0 flex items-center justify-center text-4xl font-bold"
+            >15</span
+          >
+        </div>
+        <div class="flex justify-around">
+          <button
+            id="cancel-sos-button"
+            class="bg-gray-600 hover:bg-gray-500 text-white font-bold py-3 px-8 rounded-lg transition-colors duration-300"
+          >
+            Cancel
+          </button>
+          <button
+            id="confirm-sos-button"
+            class="bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-8 rounded-lg transition-colors duration-300"
+          >
+            Confirm Now
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/leaflet-routing-machine@3.2.12/dist/leaflet-routing-machine.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@4.10.0/dist/tf.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/coco-ssd@2.2.2/dist/coco-ssd.min.js"></script>
+    <script type="module" src="script.js"></script>
+  </body>
+</html>

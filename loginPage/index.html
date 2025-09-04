@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>IntelliEV</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="main-container">
+      <h1>IntelliEV</h1>
+      <p>A smart, connected network for modern transportation.</p>
+      <div class="role-selection">
+        <div class="role-card ev-user" data-role="ev">
+          <i class="fas fa-car-side role-icon"></i>
+          <h2>EV Driver</h2>
+        </div>
+        <div class="role-card emergency-user" data-role="emergency">
+          <i class="fas fa-truck-medical role-icon"></i>
+          <h2>Emergency Responder</h2>
+        </div>
+      </div>
+    </div>
+
+    <div id="authModal" class="modal-overlay">
+      <div id="modalContent" class="modal-content">
+        <h2 id="modalTitle"></h2>
+        <div class="form-group" id="usernameGroup">
+          <label for="usernameInput">Your Name</label>
+          <input type="text" id="usernameInput" placeholder="e.g., Jane Doe" />
+        </div>
+        <div class="form-group">
+          <label for="emailInput">Email</label>
+          <input type="email" id="emailInput" placeholder="you@example.com" />
+        </div>
+        <div class="form-group">
+          <label for="passwordInput">Password (min. 6 characters)</label>
+          <input type="password" id="passwordInput" placeholder="••••••••" />
+        </div>
+        <div class="form-group" id="regGroup">
+          <label for="regInput" id="regLabel"></label>
+          <input type="text" id="regInput" />
+        </div>
+        <button id="actionBtn" class="modal-button">Action</button>
+        <button id="closeBtn" class="modal-button close-btn">Cancel</button>
+        <div class="switch-link">
+          <span id="loginHint"
+            >Don't have an account? <a id="switchToSignup">Sign Up</a></span
+          >
+          <span id="signupHint"
+            >Already have an account? <a id="switchToLogin">Login</a></span
+          >
+        </div>
+      </div>
+    </div>
+
+    <div id="notification-toast"></div>
+
+    <script type="module" src="script.js"></script>
+  </body>
+</html>

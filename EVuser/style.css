@@ -1,0 +1,222 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
+
+body {
+  font-family: "Inter", sans-serif;
+  overflow-y: inherit;
+}
+
+#mapid {
+  height: 100%;
+}
+
+.leaflet-popup-content-wrapper {
+  border-radius: 8px;
+}
+
+.live-feed-message {
+  overflow-y: visible;
+  border-left-width: 4px;
+}
+
+.leaflet-div-icon {
+  background: transparent;
+  border: none;
+}
+
+.traffic-report-btn {
+  transition: all 0.2s ease-in-out;
+}
+
+.traffic-report-btn:hover {
+  transform: scale(1.05);
+}
+
+.charging-marker {
+  background-color: #2563eb;
+  border-radius: 50%;
+  border: 2px solid white;
+  box-shadow: 0 0 5px #2563eb;
+  width: 35px;
+  height: 35px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-weight: bold;
+  font-size: 18px;
+  transition: transform 0.2s ease-in-out;
+  cursor: pointer;
+}
+
+.charging-marker:hover {
+  transform: scale(1.15);
+}
+
+.recommended-marker {
+  background-color: #16a34a;
+  box-shadow: 0 0 5px #16a34a;
+}
+
+.message-box {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
+  background-color: rgba(59, 130, 246, 0.9);
+  color: white;
+  padding: 1rem 2rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  display: none;
+  animation: fadeinout 4s forwards;
+}
+
+@keyframes fadeinout {
+  0% {
+    opacity: 0;
+    display: block;
+  }
+  20% {
+    opacity: 1;
+  }
+  80% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    display: none;
+  }
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.7);
+  }
+  70% {
+    box-shadow: 0 0 0 20px rgba(220, 38, 38, 0);
+  }
+}
+
+#sos-button-inline {
+  animation: pulse 2s infinite;
+}
+
+#countdown-circle {
+  transition: stroke-dasharray 1s linear;
+}
+
+#close-navigation-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 1000;
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2000;
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility 0s, opacity 0.3s ease;
+  pointer-events: none;
+}
+.modal-overlay.visible {
+  visibility: visible;
+  opacity: 1;
+  pointer-events: auto;
+}
+.modal-content {
+  background-color: #ffffff;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  width: 90%;
+  max-width: 500px;
+  text-align: center;
+}
+
+.hazard-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.hazard-btn {
+  width: 100%;
+  padding: 1rem;
+  border-radius: 8px;
+  font-weight: 600;
+  background-color: #f1f5f9;
+  color: #334155;
+  border: 1px solid #e2e8f0;
+  transition: all 0.2s ease-in-out;
+}
+.hazard-btn:hover {
+  background-color: #e2e8f0;
+}
+
+.traffic-light-marker {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 2px solid white;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.traffic-light-marker.red {
+  background-color: #ef4444;
+}
+.traffic-light-marker.green {
+  background-color: #22c55e;
+}
+.traffic-light-marker.yellow {
+  background-color: #f59e0b;
+}
+.traffic-light-marker i {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 14px;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+.signal-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 1rem;
+}
+.signal-card {
+  border-radius: 8px;
+  padding: 1rem;
+  color: white;
+  text-align: center;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+.signal-card.red {
+  background-color: #ef4444;
+}
+.signal-card.green {
+  background-color: #22c55e;
+}
+.signal-card.yellow {
+  background-color: #f59e0b;
+}
+.signal-name {
+  font-weight: 600;
+  margin: 0;
+  font-size: 0.9rem;
+}
+.signal-location {
+  margin: 0;
+  font-size: 0.75rem;
+  opacity: 0.9;
+}
