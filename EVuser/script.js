@@ -24,7 +24,7 @@ import {
   set,
 } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-database.js";
 
-import { firebaseConfig } from '../firebase-cofig.js'; 
+import { firebaseConfig } from '../firebase-config.js'; 
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
